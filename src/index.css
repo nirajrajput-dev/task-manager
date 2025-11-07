@@ -66,3 +66,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  margin: 0; /* Reset margin for header title */
+  color: #646cff;
+}
