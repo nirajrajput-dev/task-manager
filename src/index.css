@@ -129,3 +129,44 @@ header h1 {
 .task-list li:last-child {
   margin-bottom: 0;
 }
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.task-text {
+  flex-grow: 1; /* Allow text to take available space */
+  text-align: left;
+  margin-right: 1rem;
+  cursor: pointer; /* Indicate it's clickable */
+  word-break: break-word; /* Prevent long words from overflowing */
+}
+
+.task-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.task-actions button {
+  padding: 0.4em 0.8em;
+  font-size: 0.85em;
+  border-radius: 5px;
+  background-color: #333; /* Default button color */
+  color: #fff;
+}
+
+.task-actions button:hover {
+  border-color: #646cff;
+}
+
+.delete-button {
+  background-color: #dc3545; /* Red for delete */
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+  border-color: #dc3545;
+}
