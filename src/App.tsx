@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react"; // Import useReducer
 import Header from "./components/Header";
 import TaskItem from "./components/TaskItem";
 import type { Task } from "./types";
+import { tasksReducer } from "./tasksReducer"; // Import our reducer
 
 function App() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  // 1. Replace useState for tasks with useReducer
+  // useReducer returns the current state and a dispatch function
+  const [tasks, dispatch] = useReducer(tasksReducer, []); // [] is the initial state
+
+  // State for the new task input field remains with useState
   const [newTaskText, setNewTaskText] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,22 +26,19 @@ function App() {
       completed: false,
     };
 
-    setTasks((prevTasks) => [...prevTasks, newTask]);
+    // 2. Dispatch an action instead of directly calling setTasks
+    dispatch({ type: "ADD_TASK", payload: newTask }); // Send ADD_TASK action
     setNewTaskText("");
   };
 
-  // New: Function to toggle task completion
+  // 3. Refactor toggle handler to dispatch an action
   const handleToggleTask = (id: string) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
+    dispatch({ type: "TOGGLE_TASK", payload: { id } }); // Send TOGGLE_TASK action
   };
 
-  // New: Function to delete a task
+  // 4. Refactor delete handler to dispatch an action
   const handleDeleteTask = (id: string) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+    dispatch({ type: "DELETE_TASK", payload: { id } }); // Send DELETE_TASK action
   };
 
   return (
@@ -62,8 +64,8 @@ function App() {
             <TaskItem
               key={task.id}
               task={task}
-              onToggle={handleToggleTask} // Pass the toggle handler down
-              onDelete={handleDeleteTask} // Pass the delete handler down
+              onToggle={handleToggleTask}
+              onDelete={handleDeleteTask}
             />
           ))
         )}
