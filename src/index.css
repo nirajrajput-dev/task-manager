@@ -170,3 +170,40 @@ header h1 {
   background-color: #c82333;
   border-color: #dc3545;
 }
+
+.app-header {
+  display: flex;
+  justify-content: space-between; /* Space out title and auth section */
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333;
+  margin-bottom: 2rem;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 1rem; /* Space between items if wrapped */
+}
+
+.app-header h1 {
+  margin: 0;
+  color: #646cff;
+  flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+.auth-section button {
+  padding: 0.5em 1em;
+  background-color: #4CAF50; /* Green for login */
+  color: white;
+  border: none;
+}
+
+.auth-section button:hover {
+  background-color: #45a049;
+  border-color: #4CAF50;
+}
