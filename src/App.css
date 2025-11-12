@@ -1,0 +1,10 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  main {
+    flex-grow: 1; /* Ensures the main content area fills available space */
+    padding-top: 2rem;
+  }
