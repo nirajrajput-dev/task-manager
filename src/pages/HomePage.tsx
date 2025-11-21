@@ -1,20 +1,23 @@
 // src/pages/HomePage.tsx
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react"; // Keep useState for the form
 import TaskItem from "../components/TaskItem";
-import type { Task } from "../types";
-import { tasksReducer } from "../tasksReducer";
+import type { Task, TaskAction } from "../types"; // Import TaskAction
 
-// Renamed from App to HomePage
-function HomePage() {
-  const [tasks, dispatch] = useReducer(tasksReducer, []);
+// Define props for the component
+interface HomePageProps {
+  tasks: Task[];
+  dispatch: React.Dispatch<TaskAction>;
+}
+
+const HomePage: React.FC<HomePageProps> = ({ tasks, dispatch }) => {
+  // Keep form state local to this page
   const [newTaskText, setNewTaskText] = useState<string>("");
-  // ... (all the handleAddTask, handleToggleTask, etc. functions)
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Add function back
     setNewTaskText(e.target.value);
   };
+
   const handleAddTask = (e: React.FormEvent) => {
-    // Add function back
     e.preventDefault();
     if (newTaskText.trim() === "") return;
     const newTask: Task = {
@@ -25,21 +28,18 @@ function HomePage() {
     dispatch({ type: "ADD_TASK", payload: newTask });
     setNewTaskText("");
   };
+
   const handleToggleTask = (id: string) => {
-    // Add function back
     dispatch({ type: "TOGGLE_TASK", payload: { id } });
   };
+
   const handleDeleteTask = (id: string) => {
-    // Add function back
     dispatch({ type: "DELETE_TASK", payload: { id } });
   };
 
   return (
     <>
-      {" "}
-      {/* Use a fragment because we don't need a wrapper div */}
       <form onSubmit={handleAddTask} className="task-input-form">
-        {/* ... form JSX ... */}
         <input
           type="text"
           placeholder="Add a new task..."
@@ -50,7 +50,6 @@ function HomePage() {
         <button type="submit">Add Task</button>
       </form>
       <ul className="task-list">
-        {/* ... list JSX ... */}
         {tasks.length === 0 ? (
           <p>No tasks yet! Add one above.</p>
         ) : (
@@ -66,6 +65,6 @@ function HomePage() {
       </ul>
     </>
   );
-}
+};
 
 export default HomePage;

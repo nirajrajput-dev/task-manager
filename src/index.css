@@ -236,3 +236,35 @@ nav a:hover, nav a.active { /* React Router will add an 'active' class by defaul
   background-color: #45a049;
   border-color: #4CAF50;
 }
+
+.task-text-link {
+  flex-grow: 1;
+  text-align: left;
+  margin-right: 1rem;
+  color: inherit; /* Inherit color from parent */
+  text-decoration: none;
+  word-break: break-word;
+}
+.task-text-link:hover {
+  color: #646cff; /* Highlight on hover */
+}
+
+.task-detail-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+}
+.task-detail-content {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+.task-detail-content p {
+  margin: 0.5rem 0;
+}
+.task-detail-page button {
+  background-color: #646cff;
+  color: white;
+}
