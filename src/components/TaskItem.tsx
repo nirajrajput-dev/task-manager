@@ -1,8 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Import Link
+import { Link } from "react-router-dom";
 import type { Task } from "../types";
 
-// ... interface
 interface TaskItemProps {
   task: Task;
   onToggle: (id: string) => void;
@@ -10,11 +9,11 @@ interface TaskItemProps {
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) => {
+  console.log(`Rendering TaskItem: ${task.text}`); // For demonstrating re-renders
+
   return (
     <li className="task-item">
       <Link to={`/task/${task.id}`} className="task-text-link">
-        {" "}
-        {/* Wrap text in a Link */}
         <span
           style={{ textDecoration: task.completed ? "line-through" : "none" }}
         >
@@ -33,4 +32,5 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete }) => {
   );
 };
 
-export default TaskItem;
+// Wrap the component export with React.memo to prevent unnecessary re-renders
+export default React.memo(TaskItem);

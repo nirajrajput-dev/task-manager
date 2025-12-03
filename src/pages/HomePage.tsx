@@ -1,7 +1,6 @@
-// src/pages/HomePage.tsx
-import React, { useState } from "react"; // Keep useState for the form
+import React, { useState, useCallback, useMemo } from "react";
 import TaskItem from "../components/TaskItem";
-import type { Task, TaskAction } from "../types"; // Import TaskAction
+import type { Task, TaskAction } from "../types";
 
 // Define props for the component
 interface HomePageProps {
@@ -29,16 +28,37 @@ const HomePage: React.FC<HomePageProps> = ({ tasks, dispatch }) => {
     setNewTaskText("");
   };
 
-  const handleToggleTask = (id: string) => {
-    dispatch({ type: "TOGGLE_TASK", payload: { id } });
-  };
+  // Memoize callback functions with useCallback to ensure they don't change
+  // on every render, which is necessary for React.memo on TaskItem to work.
+  const handleToggleTask = useCallback(
+    (id: string) => {
+      dispatch({ type: "TOGGLE_TASK", payload: { id } });
+    },
+    [dispatch]
+  );
 
-  const handleDeleteTask = (id: string) => {
-    dispatch({ type: "DELETE_TASK", payload: { id } });
-  };
+  const handleDeleteTask = useCallback(
+    (id: string) => {
+      dispatch({ type: "DELETE_TASK", payload: { id } });
+    },
+    [dispatch]
+  );
+
+  // Memoize the result of this calculation with useMemo.
+  // It will only re-run if the `tasks` array changes.
+  const completedTasksCount = useMemo(() => {
+    console.log("Calculating completed tasks...");
+    return tasks.filter((task) => task.completed).length;
+  }, [tasks]);
 
   return (
     <>
+      <div className="task-summary">
+        <h3>Summary</h3>
+        <p>Total Tasks: {tasks.length}</p>
+        <p>Completed Tasks: {completedTasksCount}</p>
+      </div>
+
       <form onSubmit={handleAddTask} className="task-input-form">
         <input
           type="text"
@@ -49,6 +69,7 @@ const HomePage: React.FC<HomePageProps> = ({ tasks, dispatch }) => {
         />
         <button type="submit">Add Task</button>
       </form>
+
       <ul className="task-list">
         {tasks.length === 0 ? (
           <p>No tasks yet! Add one above.</p>
